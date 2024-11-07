@@ -1,7 +1,7 @@
 import os
 import importlib
 
-
+##
 class DefaultEngineConfig():
     def __init__(self, exp_name='default', model='aott'):
         model_cfg = importlib.import_module('configs.models.' +
@@ -13,7 +13,7 @@ class DefaultEngineConfig():
         self.STAGE_NAME = 'YTB'
 
         self.DATASETS = ['youtubevos']
-        self.DATA_WORKERS = 8
+        self.DATA_WORKERS = 2
         self.DATA_RANDOMCROP = (465,
                                 465) if self.MODEL_ALIGN_CORNERS else (464,
                                                                        464)
@@ -24,19 +24,21 @@ class DefaultEngineConfig():
         self.DATA_MAX_SCALE_FACTOR = 1.3
         self.DATA_RANDOM_REVERSE_SEQ = True
         self.DATA_SEQ_LEN = 5
-        self.DATA_DAVIS_REPEAT = 5
-        self.DATA_RANDOM_GAP_DAVIS = 12  # max frame interval between two sampled frames for DAVIS (24fps)
+        self.DATA_DAVIS_REPEAT = 1
+        self.DATA_RANDOM_GAP_DAVIS = 1  # max frame interval between two sampled frames for DAVIS (24fps)
         self.DATA_RANDOM_GAP_YTB = 3  # max frame interval between two sampled frames for YouTube-VOS (6fps)
         self.DATA_DYNAMIC_MERGE_PROB = 0.3
 
         self.PRETRAIN = True
         self.PRETRAIN_FULL = False  # if False, load encoder only
-        self.PRETRAIN_MODEL = './data_wd/pretrain_model/mobilenet_v2.pth'
+        #self.PRETRAIN_MODEL = './data_wd/pretrain_model/mobilenet_v2.pth'
+        self.PRETRAIN_MODEL = '/content/roflan/aot/pretrain_models/resnet50-0676ba61.pth'
+        self.FINETUNED_MODEL = '/content/roflan/finetuned_models'
         # self.PRETRAIN_MODEL = './pretrain_models/mobilenet_v2-b0353104.pth'
 
-        self.TRAIN_TOTAL_STEPS = 100000
+        self.TRAIN_TOTAL_STEPS = 1000
         self.TRAIN_START_STEP = 0
-        self.TRAIN_WEIGHT_DECAY = 0.07
+        self.TRAIN_WEIGHT_DECAY = 0.07 
         self.TRAIN_WEIGHT_DECAY_EXCLUSIVE = {
             # 'encoder.': 0.01
         }
@@ -44,7 +46,7 @@ class DefaultEngineConfig():
             'absolute_pos_embed', 'relative_position_bias_table',
             'relative_emb_v', 'conv_out'
         ]
-        self.TRAIN_LR = 2e-4
+        self.TRAIN_LR = 2e-4 ############## make lower next time
         self.TRAIN_LR_MIN = 2e-5 if 'mobilenetv2' in self.MODEL_ENCODER else 1e-5
         self.TRAIN_LR_POWER = 0.9
         self.TRAIN_LR_ENCODER_RATIO = 0.1
@@ -56,20 +58,20 @@ class DefaultEngineConfig():
         self.TRAIN_AUX_LOSS_RATIO = 1.0
         self.TRAIN_OPT = 'adamw'
         self.TRAIN_SGD_MOMENTUM = 0.9
-        self.TRAIN_GPUS = 4
-        self.TRAIN_BATCH_SIZE = 16
+        self.TRAIN_GPUS = 1
+        self.TRAIN_BATCH_SIZE = 2 ###############
         self.TRAIN_TBLOG = False
         self.TRAIN_TBLOG_STEP = 50
-        self.TRAIN_LOG_STEP = 20
+        self.TRAIN_LOG_STEP = 10
         self.TRAIN_IMG_LOG = True
-        self.TRAIN_TOP_K_PERCENT_PIXELS = 0.15
+        self.TRAIN_TOP_K_PERCENT_PIXELS = 0.25
         self.TRAIN_SEQ_TRAINING_FREEZE_PARAMS = ['patch_wise_id_bank']
         self.TRAIN_SEQ_TRAINING_START_RATIO = 0.5
         self.TRAIN_HARD_MINING_RATIO = 0.5
         self.TRAIN_EMA_RATIO = 0.1
         self.TRAIN_CLIP_GRAD_NORM = 5.
-        self.TRAIN_SAVE_STEP = 5000
-        self.TRAIN_MAX_KEEP_CKPT = 8
+        self.TRAIN_SAVE_STEP = 300 ###############################
+        self.TRAIN_MAX_KEEP_CKPT = 4
         self.TRAIN_RESUME = False
         self.TRAIN_RESUME_CKPT = None
         self.TRAIN_RESUME_STEP = 0
@@ -91,7 +93,7 @@ class DefaultEngineConfig():
         self.TEST_DATASET = 'youtubevos'
         self.TEST_DATASET_FULL_RESOLUTION = False
         self.TEST_DATASET_SPLIT = 'val'
-        self.TEST_CKPT_PATH = None
+        self.TEST_CKPT_PATH = ""
         # if "None", evaluate the latest checkpoint.
         self.TEST_CKPT_STEP = None
         self.TEST_FLIP = False
@@ -107,8 +109,9 @@ class DefaultEngineConfig():
         self.DIST_START_GPU = 0
 
     def init_dir(self):
-        self.DIR_DATA = '../VOS02/datasets'#'./datasets'
+        self.DIR_DATA = '/content/roflan/aot/datasets'#'./datasets'
         self.DIR_DAVIS = os.path.join(self.DIR_DATA, 'DAVIS')
+        self.DIR_DAVIS_TEST = os.path.join(self.DIR_DATA, 'DAVIS-TEST')
         self.DIR_YTB = os.path.join(self.DIR_DATA, 'YTB')
         self.DIR_STATIC = os.path.join(self.DIR_DATA, 'Static')
 
@@ -128,7 +131,7 @@ class DefaultEngineConfig():
         for path in [
                 self.DIR_RESULT, self.DIR_CKPT, self.DIR_EMA_CKPT,
                 self.DIR_LOG, self.DIR_EVALUATION, self.DIR_IMG_LOG,
-                self.DIR_TB_LOG
+                self.DIR_TB_LOG, self.FINETUNED_MODEL
         ]:
             if not os.path.isdir(path):
                 try:
