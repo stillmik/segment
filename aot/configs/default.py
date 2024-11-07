@@ -32,8 +32,8 @@ class DefaultEngineConfig():
         self.PRETRAIN = True
         self.PRETRAIN_FULL = False  # if False, load encoder only
         #self.PRETRAIN_MODEL = './data_wd/pretrain_model/mobilenet_v2.pth'
-        self.PRETRAIN_MODEL = '/content/roflan/aot/pretrain_models/resnet50-0676ba61.pth'
-        self.FINETUNED_MODEL = '/content/roflan/finetuned_models'
+        self.PRETRAIN_MODEL = '/content/Segment-and-Track-Anything/aot/pretrain_models/resnet50-0676ba61.pth'
+        self.FINETUNED_MODEL = '/content/Segment-and-Track-Anything/finetuned_models'
         # self.PRETRAIN_MODEL = './pretrain_models/mobilenet_v2-b0353104.pth'
 
         self.TRAIN_TOTAL_STEPS = 1000
@@ -109,7 +109,7 @@ class DefaultEngineConfig():
         self.DIST_START_GPU = 0
 
     def init_dir(self):
-        self.DIR_DATA = '/content/roflan/aot/datasets'#'./datasets'
+        self.DIR_DATA = '/content/Segment-and-Track-Anything/aot/datasets'#'./datasets'
         self.DIR_DAVIS = os.path.join(self.DIR_DATA, 'DAVIS')
         self.DIR_DAVIS_TEST = os.path.join(self.DIR_DATA, 'DAVIS-TEST')
         self.DIR_YTB = os.path.join(self.DIR_DATA, 'YTB')
