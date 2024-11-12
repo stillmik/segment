@@ -531,21 +531,19 @@ class Trainer(object):
                                          running_ious, now_lr, step)
 
                     if step % cfg.TRAIN_LOG_STEP == 0:
-                        strs = 'I:{}, LR:{:.5f}, T:{:.1f}({:.1f})s, Obj:{:.1f}({:.1f})'.format(
+                        strs = 'Step:{}, LearnRate:{:.5f}, BatchTime:{:.1f}({:.1f})s, Obj_???:{:.1f}({:.1f})'.format(
                             step, now_lr, batch_time.val,
                             batch_time.moving_avg, avg_obj.val,
                             avg_obj.moving_avg)
                         batch_time.reset()
                         avg_obj.reset()
                         for idx in range(seq_len):
-                            strs += ', {}: L {:.3f}({:.3f}) IoU {:.1f}({:.1f})%'.format(
-                                frame_names[idx], running_losses[idx].val,
-                                running_losses[idx].moving_avg,
-                                running_ious[idx].val,
-                                running_ious[idx].moving_avg)
+                            strs += ', Frame{}, epoch {}, step {}:  L {:.3f}({:.3f}) IoU {:.1f}({:.1f})%'.format(
+                                frame_names[idx], epoch, step, 
+                                running_losses[idx].val, running_losses[idx].moving_avg,
+                                running_ious[idx].val, running_ious[idx].moving_avg)
                             running_losses[idx].reset()
                             running_ious[idx].reset()
-
                         self.print_log(strs)
 
                 step += 1
