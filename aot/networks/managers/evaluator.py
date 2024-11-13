@@ -159,7 +159,7 @@ class Evaluator(object):
                                             'Annotations', resolution)
             self.dataset = DAVIS_Test(
                 split=[cfg.TEST_DATASET_SPLIT],
-                root=cfg.DIR_DAVIS,
+                root=cfg.DIR_DAVIS_TEST,
                 year=2017,
                 transform=eval_transforms,
                 full_resolution=cfg.TEST_DATASET_FULL_RESOLUTION,
@@ -172,7 +172,7 @@ class Evaluator(object):
                                             'Annotations', resolution)
             self.dataset = DAVIS_Test(
                 split=[cfg.TEST_DATASET_SPLIT],
-                root=cfg.DIR_DAVIS,
+                root=cfg.DIR_DAVIS_TEST,
                 year=2016,
                 transform=eval_transforms,
                 full_resolution=cfg.TEST_DATASET_FULL_RESOLUTION,
