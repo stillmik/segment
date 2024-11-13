@@ -389,6 +389,10 @@ class Trainer(object):
         self.print_log('Start training:')
         model.train()
         while step < cfg.TRAIN_TOTAL_STEPS:
+            self.print_log(f'Current epoch:: {epoch}')
+            if epoch > cfg.TRAIN_EPOCHS
+              break
+            
             if self.cfg.DIST_ENABLE:
                 train_sampler.set_epoch(epoch)
             epoch += 1

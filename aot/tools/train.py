@@ -7,14 +7,11 @@ sys.path.append('.')
 sys.path.append('..')
 
 import torch.multiprocessing as mp
-
 from networks.managers.trainer import Trainer
 
 
 def main_worker(gpu, cfg, enable_amp=True):
-    # Initiate a training manager
     trainer = Trainer(rank=gpu, cfg=cfg, enable_amp=enable_amp)
-    # Start Training
     trainer.sequential_training()
 
 
@@ -25,16 +22,13 @@ def main():
     parser.add_argument('--stage', type=str, default='pre')
     parser.add_argument('--model', type=str, default='aott')
     parser.add_argument('--max_id_num', type=int, default='-1')
-
     parser.add_argument('--start_gpu', type=int, default=0)
     parser.add_argument('--gpu_num', type=int, default=-1)
     parser.add_argument('--batch_size', type=int, default=-1)
     parser.add_argument('--dist_url', type=str, default='')
     parser.add_argument('--amp', action='store_true')
     parser.set_defaults(amp=False)
-
     parser.add_argument('--pretrained_path', type=str, default='')
-
     parser.add_argument('--datasets', nargs='+', type=str, default=[])
     parser.add_argument('--lr', type=float, default=-1.)
     parser.add_argument('--total_step', type=int, default=-1.)

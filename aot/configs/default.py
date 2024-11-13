@@ -37,6 +37,7 @@ class DefaultEngineConfig():
         # self.PRETRAIN_MODEL = './pretrain_models/mobilenet_v2-b0353104.pth'
 
         self.TRAIN_TOTAL_STEPS = 1000
+        self.TRAIN_EPOCHS = 3
         self.TRAIN_START_STEP = 0
         self.TRAIN_WEIGHT_DECAY = 0.07 
         self.TRAIN_WEIGHT_DECAY_EXCLUSIVE = {
