@@ -391,7 +391,7 @@ class Trainer(object):
         while step < cfg.TRAIN_TOTAL_STEPS:
             self.print_log(f'Current epoch:: {epoch}')
             if epoch > cfg.TRAIN_EPOCHS
-              break
+                break
             
             if self.cfg.DIST_ENABLE:
                 train_sampler.set_epoch(epoch)
