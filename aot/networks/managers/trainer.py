@@ -390,7 +390,7 @@ class Trainer(object):
         model.train()
         while step < cfg.TRAIN_TOTAL_STEPS:
             self.print_log(f'Current epoch:: {epoch}')
-            if epoch > cfg.TRAIN_EPOCHS
+            if epoch > cfg.TRAIN_EPOCHS:
                 break
             
             if self.cfg.DIST_ENABLE:
